@@ -1,4 +1,4 @@
-SOURCE_FILES := main.c
+SOURCE_FILES := main.c segment_display.c
 
 PROGRAM_WITH_JTAG := no
 
@@ -8,8 +8,8 @@ ifeq ($(PROGRAM_WITH_JTAG), yes)
 endif
 
 BUILD_DIR := build
-TARGET_CPU := atmega88pa
-TARGET_DEVICE := m88p
+TARGET_CPU := atmega88
+TARGET_DEVICE := m88
 
 CC := avr-gcc
 CFLAGS := -O -std=c11 -mmcu=$(TARGET_CPU)
