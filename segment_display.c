@@ -71,7 +71,7 @@ void seg_init(){
 
 void seg_set(int display, int number){
 	switch(display){
-		case 0:
+		case SEGMENT_DISPLAY_LEFT:
 			switch(number){
 				case 0:
 					SET_L_A;
@@ -145,7 +145,7 @@ void seg_set(int display, int number){
 					break;
 			}
 			break;
-		case 1:
+		case SEGMENT_DISPLAY_RIGHT:
 			switch(number){
 				case 0:
 					SET_R_A;
