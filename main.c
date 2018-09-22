@@ -3,8 +3,11 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include "segment_display.h"
+#include "pwm.h"
 
 int main(){
+
+	pwm_init();
 
 	seg_init();
 
@@ -17,6 +20,8 @@ int main(){
 
 			seg_set(SEGMENT_DISPLAY_LEFT, counter / 10);
 			seg_set(SEGMENT_DISPLAY_RIGHT, counter % 10);
+
+			pwm_set_servo(counter);
 
 			counter++;
 
