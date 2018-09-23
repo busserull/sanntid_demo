@@ -1,4 +1,4 @@
-SOURCE_FILES := main.c segment_display.c pwm.c
+SOURCE_FILES := main.c segment_display.c pwm.c spi.c
 
 PROGRAM_WITH_JTAG := no
 

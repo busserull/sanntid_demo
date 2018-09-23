@@ -4,31 +4,26 @@
 #include <util/delay.h>
 #include "segment_display.h"
 #include "pwm.h"
+#include "spi.h"
 
 int main(){
-
+	spi_init();
+	seg_init();
 	pwm_init();
 
-	seg_init();
-
-	int counter = 0;
+	int leds_on = 0;
 
 	while(1){
-		while(counter < 100){
-			seg_clear(SEGMENT_DISPLAY_LEFT);
-			seg_clear(SEGMENT_DISPLAY_RIGHT);
+		spi_read(&leds_on);
 
-			seg_set(SEGMENT_DISPLAY_LEFT, counter / 10);
-			seg_set(SEGMENT_DISPLAY_RIGHT, counter % 10);
+		seg_clear(SEGMENT_DISPLAY_LEFT);
+		seg_clear(SEGMENT_DISPLAY_RIGHT);
 
-			pwm_set_servo(counter);
+		seg_set(SEGMENT_DISPLAY_LEFT, leds_on / 10);
+		seg_set(SEGMENT_DISPLAY_RIGHT, leds_on % 10);
 
-			counter++;
-
-			_delay_ms(100);
-		}
-
-		counter = 0;
+		// Servo takes position 0 to 100, we have 25 LEDs
+		pwm_set_servo(4 * leds_on);
 	}
 
 	return 0;
