@@ -1,6 +1,5 @@
 #include "led_driver.h"
 #include <avr/io.h>
-#include <stdint>
 
 //PORTA
 #define LED_00 (1 << PA5)
@@ -34,59 +33,68 @@
 
 static uint8_t led_array[5][5] = {0};
 
-void zero_led_array(void){
+void led_array_init(){
+	DDRA |= 0xff;
+	DDRB |= (1 << PB0) | (1 << PB1);
+	DDRC |= 0xff;
+	DDRD |= 0xff;
+}
+
+void led_array_zero(){
 	for (int i = 0; i < 5; ++i)
 	{
 		for (int j = 0; j < 5; ++j)
 		{
-			led_array[i][j] = 0
+			led_array[i][j] = 0;
 		}
 	}
 }
 
-uint32_t get_led_array(void){
+uint32_t led_array_get(){
+	uint32_t result = 0;
+
 	for (int i = 0; i < 25; ++i)
 	{
-		uint32_t result += (led_array[i%5][i/5]) << i;
+		result += (led_array[i%5][i/5]) << i;
 	}
 	return result;
 }
 
-void update_led(uint8_t x, uint8_t y, uint8_t value){
+void led_array_set(uint8_t x, uint8_t y, uint8_t value){
 	if(x < 5 && x >= 0 && y < 5 && y >= 0){
 		led_array[x][y] = 1 && value;
 	}
-	refresh_led_array();
+	led_grid_write();
 }
 
-void refresh_led_array(void){
-	PORTA = led_array[0][0]*LED_00 + 
-			led_array[0][1]*LED_01 + 
-			led_array[0][2]*LED_02 + 
-			led_array[1][0]*LED_10 + 
-			led_array[1][1]*LED_11 + 
-			led_array[1][2]*LED_12 + 
-			led_array[2][0]*LED_20 + 
+void led_grid_write(){
+	PORTA = led_array[0][0]*LED_00 +
+			led_array[0][1]*LED_01 +
+			led_array[0][2]*LED_02 +
+			led_array[1][0]*LED_10 +
+			led_array[1][1]*LED_11 +
+			led_array[1][2]*LED_12 +
+			led_array[2][0]*LED_20 +
 			led_array[2][1]*LED_21;
-	PORTB &= 0b11111100 + 
-			 led_array[4][3]*LED_43 + 
+	PORTB &= 0b11111100 +
+			 led_array[4][3]*LED_43 +
 			 led_array[4][4]*LED_44;
-	PORTB |= led_array[4][3]*LED_43 + 
+	PORTB |= led_array[4][3]*LED_43 +
 			 led_array[4][4]*LED_44;
-	PORTC = led_array[2][2]*LED_22 + 
-			led_array[3][0]*LED_30 + 
-			led_array[3][1]*LED_31 + 
-			led_array[3][2]*LED_32 + 
-			led_array[4][0]*LED_40 + 
-			led_array[4][1]*LED_41 + 
+	PORTC = led_array[2][2]*LED_22 +
+			led_array[3][0]*LED_30 +
+			led_array[3][1]*LED_31 +
+			led_array[3][2]*LED_32 +
+			led_array[4][0]*LED_40 +
+			led_array[4][1]*LED_41 +
 			led_array[4][2]*LED_42;
-	PORTD = led_array[0][3]*LED_03 + 
-			led_array[0][4]*LED_04 + 
-			led_array[1][3]*LED_13 + 
-			led_array[1][4]*LED_14 + 
-			led_array[2][3]*LED_23 + 
-			led_array[2][4]*LED_24 + 
-			led_array[3][3]*LED_33 + 
+	PORTD = led_array[0][3]*LED_03 +
+			led_array[0][4]*LED_04 +
+			led_array[1][3]*LED_13 +
+			led_array[1][4]*LED_14 +
+			led_array[2][3]*LED_23 +
+			led_array[2][4]*LED_24 +
+			led_array[3][3]*LED_33 +
 			led_array[3][4]*LED_34;
 }
 
