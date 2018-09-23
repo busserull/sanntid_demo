@@ -3,9 +3,13 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include "spi.h"
+#include "led_driver.h"
 
 int main(){
 	spi_init();
+
+	led_array_init();
+	led_array_zero();
 
 	int screen_counter = 0;
 
@@ -17,7 +21,10 @@ int main(){
 			screen_counter = 0;
 		}
 
-		_delay_ms(10);
+		led_array_set(screen_counter / 5, screen_counter % 5, 1);
+		led_grid_write();
+
+		_delay_ms(100);
 	}
 
 	return 0;
