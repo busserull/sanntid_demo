@@ -1,7 +1,6 @@
 #define F_CPU 1000000
 
 #include <avr/io.h>
-#include <util/delay.h>
 #include "segment_display.h"
 #include "pwm.h"
 #include "spi.h"
