@@ -1,4 +1,4 @@
-SOURCE_FILES := main.c
+SOURCE_FILES := main.c spi.c
 
 PROGRAM_WITH_JTAG := no
 
