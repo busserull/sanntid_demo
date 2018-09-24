@@ -50,14 +50,11 @@ void led_array_zero(){
 	}
 }
 
-uint32_t led_array_get(){
-	uint32_t result = 0;
-
+void led_array_get(uint8_t *array){
 	for (int i = 0; i < 25; ++i)
 	{
-		result += (led_array[i%5][i/5]) << i;
+		array[i] = led_array[i%5][i/5];
 	}
-	return result;
 }
 
 void led_array_set(uint8_t x, uint8_t y, uint8_t value){
