@@ -6,6 +6,8 @@
 #include "led_driver.h"
 #include "uart.h"
 
+static char led_out_array[27];
+
 int main(){
 	spi_init();
 	uart_init();
@@ -23,7 +25,9 @@ int main(){
 			screen_counter = 0;
 			setting = !setting;
 		}
-		uart_send(uart_receive())
+
+		uart_send(uart_receive());
+
 		led_array_set(screen_counter / 5, screen_counter % 5, setting);
 		led_grid_write();
 
