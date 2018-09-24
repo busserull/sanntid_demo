@@ -4,7 +4,7 @@
     <%= for led_col <- 1..5 do %>
       <% led_num = format_led_number(led_row, led_col) %>
 
-      <div class="led-btn led-btn-<%= led_num %>">
+      <div class="led-btn" id="led-btn-<%= led_num %>">
         <div class="led-btn-tag">
           <div class="led-btn-tag-table">
             <div class="led-btn-tag-table-cell">

@@ -3,6 +3,7 @@ defmodule BlinkWeb.UserSocket do
 
   ## Channels
   # channel "room:*", BlinkWeb.RoomChannel
+  channel "led-channel", BlinkWeb.LEDChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
