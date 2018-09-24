@@ -18,3 +18,8 @@ void uart_send(char letter){
 	while(!(UCSR1A & (1 << UDRE1)));
 	UDR1 = letter;
 }
+
+char uart_receive(void){
+	while(!(UCSR0A & (1<<RXC0))); //Wait for sending queue
+	return UDR0;
+}

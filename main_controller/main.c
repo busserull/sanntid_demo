@@ -10,11 +10,6 @@ int main(){
 	spi_init();
 	uart_init();
 
-	while(1){
-		uart_send('a');
-		_delay_ms(500);
-	}
-
 	led_array_init();
 	led_array_zero();
 
@@ -28,7 +23,7 @@ int main(){
 			screen_counter = 0;
 			setting = !setting;
 		}
-
+		uart_send(uart_receive())
 		led_array_set(screen_counter / 5, screen_counter % 5, setting);
 		led_grid_write();
 
