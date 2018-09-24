@@ -1,4 +1,4 @@
-SOURCE_FILES := main.c spi.c led_driver.c
+SOURCE_FILES := main.c spi.c led_driver.c uart.c
 
 PROGRAM_WITH_JTAG := no
 
