@@ -8,6 +8,7 @@ defmodule Blink.Application do
 
     # Define workers and child supervisors to be supervised
     children = [
+      Blink.UART,
       # Start the endpoint when the application starts
       supervisor(BlinkWeb.Endpoint, []),
       # Start your own worker by calling: Blink.Worker.start_link(arg1, arg2, arg3)
