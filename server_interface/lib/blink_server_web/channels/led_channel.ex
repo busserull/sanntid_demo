@@ -18,12 +18,6 @@ defmodule BlinkWeb.LEDChannel do
     {:reply, :ok, socket}
   end
 
-  def handle_info(:ping, socket) do
-    count = socket.assigns[:count] || 1
-    push(socket, "ping", %{count: count})
-    {:noreply, assign(socket, :count, count + 1)}
-  end
-
   def push_update(socket) do
     broadcast!(socket, "render_leds", %{
       list: Blink.UART.list_leds()

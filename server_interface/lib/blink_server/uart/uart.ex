@@ -31,7 +31,7 @@ defmodule Blink.UART do
     Nerves.UART.open(uart_pid, @uart_interface, speed: 9600, active: false)
     Task.start_link(__MODULE__, :poll_microcontroller, [uart_pid, []])
 
-    {:ok, Enum.map(1..25, fn _val -> :off end)}
+    {:ok, Enum.map(1..25, fn _ -> false end)}
   end
 
   def handle_call({:toggle, led_number}, _from, state) do

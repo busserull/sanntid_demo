@@ -33,6 +33,7 @@ let ButtonHandler = {
 	},
 
 	renderLEDS({list}){
+		console.log("Setting:", list);
 		list.forEach(function(status, index){
 			let button = ButtonHandler.getButtonElement(index + 1);
 			ButtonHandler.setButtonStatus(button, status);
@@ -46,7 +47,7 @@ let ButtonHandler = {
 	},
 
 	setButtonStatus(ledButton, buttonOn){
-		if(buttonOn == "on"){
+		if(buttonOn){
 			ledButton.classList = "led-btn led-btn-on";
 		}
 		else{
