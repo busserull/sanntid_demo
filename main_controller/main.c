@@ -53,7 +53,7 @@ int main(){
 		led_grid_write();
 
 		screen_counter++;
-		_delay_ms(100);
+		_delay_ms(1000);
 	}
 
 	return 0;
