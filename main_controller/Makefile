@@ -35,7 +35,7 @@ flash: $(BUILD_DIR)/main.hex
 .PHONY: fuse
 fuse:
 	avrdude -p $(TARGET_DEVICE) -c $(PROGRAMMER) -U efuse:w:0xff:m
-	avrdude -p $(TARGET_DEVICE) -c $(PROGRAMMER) -U hfuse:w:0x19:m
+	avrdude -p $(TARGET_DEVICE) -c $(PROGRAMMER) -U hfuse:w:0xd9:m
 	avrdude -p $(TARGET_DEVICE) -c $(PROGRAMMER) -U lfuse:w:0xfd:m
 
 .PHONY: clean
