@@ -2,6 +2,7 @@ defmodule Blink.UART do
   use GenServer
 
   @uart_interface "ttyACM0"
+  # @uart_interface "ttyUSB0"
   @magic_offset 0x05
   @led_on 0x01
   @stx 0x02
