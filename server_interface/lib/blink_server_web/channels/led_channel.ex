@@ -13,7 +13,7 @@ defmodule BlinkWeb.LEDChannel do
 
     Blink.UART.toggle_led(led_id - 1)
 
-    push_update(socket)
+    # push_update(socket)
 
     {:reply, :ok, socket}
   end
@@ -22,6 +22,17 @@ defmodule BlinkWeb.LEDChannel do
     broadcast!(socket, "render_leds", %{
       list: Blink.UART.list_leds()
     })
+  end
+
+  # Helpers
+
+  def trigger_led_broadcast(led_list) do
+    led_status = %{list: led_list}
+    BlinkWeb.Endpoint.broadcast(
+      "led-channel",
+      "render_leds",
+      led_status
+    )
   end
 
 end

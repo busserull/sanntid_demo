@@ -52,6 +52,7 @@ defmodule Blink.UART do
   end
 
   def handle_call({:update, new_state}, _from, _state) do
+    BlinkWeb.LEDChannel.trigger_led_broadcast(new_state)
     {:reply, :ok, new_state}
   end
 
