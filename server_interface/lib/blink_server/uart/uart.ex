@@ -2,6 +2,7 @@ defmodule Blink.UART do
   use GenServer
 
   @uart_interface "ttyACM0"
+  @magic_offset 0x05
   @led_on 0x01
   @stx 0x02
   @etx 0x03
@@ -31,29 +32,33 @@ defmodule Blink.UART do
     Nerves.UART.open(uart_pid, @uart_interface, speed: 9600, active: false)
     Task.start_link(__MODULE__, :poll_microcontroller, [uart_pid, []])
 
-    {:ok, Enum.map(1..25, fn _ -> false end)}
+    {:ok, {uart_pid, Enum.map(1..25, fn _ -> false end)}}
   end
 
-  def handle_call({:toggle, led_number}, _from, state) do
-    new_state = case state |> Enum.at(led_number) do
+  def handle_call({:toggle, led_number}, _from, {uart_pid, leds}) do
+    Nerves.UART.write(uart_pid, <<@stx, led_number + @magic_offset, @etx>>)
+
+    new_leds = case leds |> Enum.at(led_number) do
       :off ->
-        state |> List.replace_at(led_number, :on)
+        leds |> List.replace_at(led_number, :on)
       :on ->
-        state |> List.replace_at(led_number, :off)
+        leds |> List.replace_at(led_number, :off)
       _ ->
-        state
+        leds
     end
 
-    {:reply, :ok, new_state}
+    BlinkWeb.LEDChannel.trigger_led_broadcast(new_leds)
+
+    {:reply, :ok, {uart_pid, new_leds}}
   end
 
-  def handle_call(:list, _from, state) do
-    {:reply, state, state}
+  def handle_call(:list, _from, {uart_pid, leds}) do
+    {:reply, leds, {uart_pid, leds}}
   end
 
-  def handle_call({:update, new_state}, _from, _state) do
-    BlinkWeb.LEDChannel.trigger_led_broadcast(new_state)
-    {:reply, :ok, new_state}
+  def handle_call({:update, new_leds}, _from, {uart_pid, _leds}) do
+    BlinkWeb.LEDChannel.trigger_led_broadcast(new_leds)
+    {:reply, :ok, {uart_pid, new_leds}}
   end
 
   # Helpers
