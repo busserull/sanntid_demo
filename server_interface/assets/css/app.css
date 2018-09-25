@@ -38,5 +38,10 @@ div.led-btn-tag-table-cell {
 	width: 100%;
 	font-size: 200%;
 	color: #ffffff;
-	font-family: "Arial";
+	font-family: sans-serif;
+
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
