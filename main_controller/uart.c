@@ -20,6 +20,8 @@ void uart_send(char letter){
 }
 
 char uart_receive(){
-	while(!(UCSR1A & (1<<RXC1)));
+	if(!(UCSR1A & (1 << RXC1))){
+		return '\0';
+	}
 	return UDR1;
 }
