@@ -31,40 +31,9 @@
 #define LED_33 (1 << PD1)
 #define LED_34 (1 << PD0)
 
-static uint8_t led_array[5][5] = {0};
+static uint8_t led_array[5][5];
 
-void led_array_init(){
-	DDRA |= 0xff;
-	DDRB |= (1 << PB0) | (1 << PB1);
-	DDRC |= 0xff;
-	DDRD |= 0xff;
-}
-
-void led_array_zero(){
-	for (int i = 0; i < 5; ++i)
-	{
-		for (int j = 0; j < 5; ++j)
-		{
-			led_array[i][j] = 0;
-		}
-	}
-}
-
-void led_array_get(uint8_t *array){
-	for (int i = 0; i < 25; ++i)
-	{
-		array[i] = !(led_array[i%5][i/5]);
-	}
-}
-
-void led_array_toggle(uint8_t x, uint8_t y){
-	if(x < 5 && x >= 0 && y < 5 && y >= 0){
-		led_array[x][y] = !led_array[x][y];
-	}
-	led_grid_write();
-}
-
-void led_grid_write(){
+static void led_grid_write(){
 	PORTA = led_array[0][0]*LED_00 +
 			led_array[0][1]*LED_01 +
 			led_array[0][2]*LED_02 +
@@ -95,17 +64,29 @@ void led_grid_write(){
 			led_array[3][4]*LED_34;
 }
 
+void led_array_init(){
+	DDRA |= 0xff;
+	DDRB |= (1 << PB0) | (1 << PB1);
+	DDRC |= 0xff;
+	DDRD |= 0xff;
 
+	for(int x = 0; x < 5; x++){
+		for(int y = 0; y < 5; y++){
+			led_array[x][y] = 0;
+		}
+	}
+}
 
+void led_array_get(uint8_t *array){
+	for (int i = 0; i < 25; ++i)
+	{
+		array[i] = !(led_array[i%5][i/5]);
+	}
+}
 
-
-
-
-
-
-
-
-
-
-
-
+void led_array_toggle(uint8_t x, uint8_t y){
+	if(x < 5 && x >= 0 && y < 5 && y >= 0){
+		led_array[x][y] = !led_array[x][y];
+	}
+	led_grid_write();
+}

@@ -4,12 +4,8 @@
 
 void led_array_init();
 
-void led_array_zero();
-
 void led_array_get(uint8_t * array);
 
 void led_array_toggle(uint8_t x, uint8_t y);
-
-void led_grid_write();
 
 #endif
