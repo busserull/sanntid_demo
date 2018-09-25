@@ -53,7 +53,7 @@ void led_array_zero(){
 void led_array_get(uint8_t *array){
 	for (int i = 0; i < 25; ++i)
 	{
-		array[i] = led_array[i%5][i/5];
+		array[i] = !(led_array[i%5][i/5]);
 	}
 }
 
